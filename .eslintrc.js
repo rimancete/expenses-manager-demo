@@ -25,5 +25,8 @@ module.exports = {
     'func-names': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'no-restricted-exports': 'off',
+    'import/no-extraneous-dependencies': 'error',
+    allowAsProps: true,
   },
 };
