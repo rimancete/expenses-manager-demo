@@ -27,6 +27,11 @@ module.exports = {
     'import/extensions': 'off',
     'no-restricted-exports': 'off',
     'import/no-extraneous-dependencies': 'error',
-    allowAsProps: true,
+    'react/no-unstable-nested-components': [
+      'error',
+      {
+        allowAsProps: true,
+      },
+    ],
   },
 };
