@@ -31,7 +31,8 @@ function theme() {
       gray500: '#39324a',
       gray700: '#221c30',
 
-      primaryLight50: '#fcfcfc',
+      primaryLight50: '#e3dcf3',
+      primaryLight100: '#c1b8d5',
     },
   };
 }

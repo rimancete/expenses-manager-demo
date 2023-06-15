@@ -1,7 +1,7 @@
-import { Text } from 'react-native';
+import ExpensesContainer from 'components/ExpensesContainer/ExpensesContainer';
 
 function RecentExpenses() {
-  return <Text>Recent Expenses</Text>;
+  return <ExpensesContainer periodName="Total" />;
 }
 
 export default RecentExpenses;
