@@ -1,10 +1,16 @@
 function theme() {
   return {
-    ioShadow: {
+    iosShadowDefault: {
       shadowColor: 'black',
       shadowOpacity: 0.25,
       shadowOffset: { width: 0, height: 2 },
       shadowRadius: 8,
+    },
+    iosShadowItem: {
+      shadowColor: '#39324a',
+      shadowOpacity: 0.4,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 4,
     },
     pressableIOSRiple: {
       button: {

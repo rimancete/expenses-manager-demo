@@ -7,6 +7,7 @@ import ManageExpense from 'screens/ManageExpense';
 import RecentExpenses from 'screens/RecentExpenses';
 import Expenses from 'screens/Expenses';
 import theme from 'styles/theme';
+import { IconButton } from 'components';
 
 export type RootStackParamList = {
   ExpensesOverview: undefined;
@@ -30,6 +31,14 @@ function ExpensesOverview() {
         tabBarStyle: { backgroundColor: theme().colors.primary500 },
         tabBarInactiveTintColor: theme().colors.primaryLight100,
         tabBarActiveTintColor: theme().colors.secondary500,
+        headerRight: ({ tintColor }) => (
+          <IconButton
+            icon="add"
+            size={24}
+            color={tintColor}
+            onPress={() => console.log('icon button pressed')}
+          />
+        ),
       }}>
       <BottomTabs.Screen
         name="RecentExpenses"

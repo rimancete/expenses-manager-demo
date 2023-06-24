@@ -1,4 +1,4 @@
-import ExpensesContainer from 'components/ExpensesContainer/ExpensesContainer';
+import { ExpensesContainer } from 'components';
 
 function Expenses() {
   return <ExpensesContainer periodName="Las 7 Days" />;

@@ -1,4 +1,4 @@
-import ExpensesContainer from 'components/ExpensesContainer/ExpensesContainer';
+import { ExpensesContainer } from 'components';
 
 function RecentExpenses() {
   return <ExpensesContainer periodName="Total" />;

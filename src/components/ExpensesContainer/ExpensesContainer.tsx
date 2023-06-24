@@ -1,6 +1,7 @@
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { ExpensesDataModel } from 'models';
+import theme from 'styles/theme';
 import ExpensesSummary from './components/ExpensesSummary';
 import ExpensesList from './components/ExpensesList';
 
@@ -35,6 +36,30 @@ const DUMMY_EXPENSES = [
     amount: 18.59,
     date: new Date('2023-02-18'),
   },
+  {
+    id: 'e6',
+    description: 'A pair of trousers',
+    amount: 89.29,
+    date: new Date('2023-01-05'),
+  },
+  {
+    id: 'e7',
+    description: 'Some bananas',
+    amount: 5.99,
+    date: new Date('2022-12-01'),
+  },
+  {
+    id: 'e8',
+    description: 'A book',
+    amount: 14.99,
+    date: new Date('2023-02-19'),
+  },
+  {
+    id: 'e9',
+    description: 'Another book',
+    amount: 18.59,
+    date: new Date('2023-02-18'),
+  },
 ];
 
 interface ExpensesContainerProps {
@@ -45,7 +70,7 @@ interface ExpensesContainerProps {
 
 function ExpensesContainer({ periodName }: ExpensesContainerProps) {
   return (
-    <View>
+    <View style={styles.container}>
       <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={periodName} />
       <ExpensesList expenses={DUMMY_EXPENSES} />
     </View>
@@ -53,3 +78,12 @@ function ExpensesContainer({ periodName }: ExpensesContainerProps) {
 }
 
 export default ExpensesContainer;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingBottom: 0,
+    backgroundColor: theme().colors.primary700,
+  },
+});
