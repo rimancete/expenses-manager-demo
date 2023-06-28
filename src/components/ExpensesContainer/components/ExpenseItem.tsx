@@ -3,16 +3,21 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { formatDate } from 'utils';
 import { ExpenseType } from 'models/index';
 import theme from 'styles/theme';
+import { useNavigation } from '@react-navigation/native';
+import { ManageExpenseScreenNavigationHookProps } from 'types';
 
 interface ExpenseItemProps {
   expense: ExpenseType;
 }
 
 function ExpenseItem({ expense }: ExpenseItemProps) {
-  const { description, date, amount } = expense;
+  const { description, date, amount, id } = expense;
 
+  const navigation = useNavigation<ManageExpenseScreenNavigationHookProps>();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const expenseItemPressHandler = () => {};
+  const expenseItemPressHandler = () => {
+    navigation.navigate('ManageExpense', { categoryId: id });
+  };
   return (
     <Pressable style={({ pressed }) => pressed && styles.pressed} onPress={expenseItemPressHandler}>
       <View style={styles.itemContainer}>
