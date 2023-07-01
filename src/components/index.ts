@@ -1,4 +1,5 @@
 import ExpensesContainer from './ExpensesContainer';
 import IconButton from './IconButton';
+import Button from './Button';
 
-export { ExpensesContainer, IconButton };
+export { Button, ExpensesContainer, IconButton };

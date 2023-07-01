@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { formatDate } from 'utils';
-import { ExpenseType } from 'models/index';
+import { ExpenseType } from 'models';
 import theme from 'styles/theme';
 import { useNavigation } from '@react-navigation/native';
 import { ManageExpenseScreenNavigationHookProps } from 'types';

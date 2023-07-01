@@ -33,5 +33,12 @@ module.exports = {
         allowAsProps: true,
       },
     ],
+    'react/require-default-props': [
+      'error',
+      {
+        forbidDefaultForRequired: true,
+        functions: 'defaultArguments',
+      },
+    ],
   },
 };
