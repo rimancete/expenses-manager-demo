@@ -5,7 +5,6 @@ interface ExpenseType {
   date: Date;
 }
 type ExpensesDataType = {
-  expenses: ExpenseType[];
   periodName: string;
 };
 
