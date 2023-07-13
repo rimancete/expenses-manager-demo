@@ -1,12 +1,13 @@
 import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { ExpenseType } from 'models';
-import { useGlobalState } from 'store/context';
 import ExpenseItem from './ExpenseItem';
 
-function ExpensesList() {
-  const { expenses } = useGlobalState();
+interface ExpensesListProps {
+  expenses: ExpenseType[];
+}
 
+function ExpensesList({ expenses }: ExpensesListProps) {
   const keyExtractor = (item: ExpenseType) => item.id;
 
   const renderItem = (itemData: ListRenderItemInfo<ExpenseType>) => {

@@ -2,11 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { ExpenseType, ExpensesDataModel } from 'models';
 import theme from 'styles/theme';
-import { useGlobalState } from 'store/context';
 
-function ExpensesSummary({ periodName }: ExpensesDataModel) {
-  const { expenses } = useGlobalState();
+interface ExpensesSummaryProps {
+  periodName: ExpensesDataModel['periodName'];
+  expenses: ExpenseType[];
+}
 
+function ExpensesSummary({ periodName, expenses }: ExpensesSummaryProps) {
   const expensesSum = expenses.reduce((sum: number, expense: ExpenseType) => {
     return sum + expense.amount;
   }, 0);

@@ -1,23 +1,31 @@
 import { useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { useDispatch, useGlobalState } from 'store/context';
+import { ManageExpenseNavigationProps } from 'types';
+import { ExpenseType } from 'models';
 import { IconButton, Button } from 'components';
 import theme from 'styles/theme';
-import { ManageExpenseNavigationProps } from 'types';
 
 export interface ManageExpenseParams {
-  categoryId?: string;
+  expenseId?: string;
 }
 
 function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
-  const categoryId = route.params;
-  const isEdting = !!categoryId;
+  const { expenseId } = route.params || {};
+
+  const isEdting = !!expenseId;
+
+  const { expenses } = useGlobalState();
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     navigation.goBack();
   };
 
   const deleteExpenseHandler = () => {
+    const filteredExpenses = expenses.filter((expense: ExpenseType) => expense.id !== expenseId);
+    dispatch({ expenses: filteredExpenses });
     closeModal();
   };
 
@@ -26,6 +34,26 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
   };
 
   const confirmHandler = () => {
+    if (!isEdting) {
+      const dummyNewExpense = {
+        description: 'Test New Expense',
+        amount: 29.99,
+        date: new Date('2023-08-13'),
+      };
+      const id = new Date().toString() + Math.random().toString();
+      dispatch({ expenses: [{ ...dummyNewExpense, id }, ...expenses] });
+    } else {
+      const dummyEditExpense = { description: 'Test', amount: 19.99, date: new Date('2023-07-12') };
+      const updatableExpenseIndex = expenses.findIndex(
+        (expense: ExpenseType) => expense.id === expenseId,
+      );
+      const updatableExpense = expenses[updatableExpenseIndex];
+      const updatedItem = { ...updatableExpense, ...dummyEditExpense };
+      const updatedExpenses = [...expenses];
+      updatedExpenses[updatableExpenseIndex] = updatedItem;
+
+      dispatch({ expenses: updatedExpenses });
+    }
     closeModal();
   };
 

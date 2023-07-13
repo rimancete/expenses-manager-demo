@@ -16,7 +16,7 @@ function ExpenseItem({ expense }: ExpenseItemProps) {
   const navigation = useNavigation<ManageExpenseScreenNavigationHookProps>();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const expenseItemPressHandler = () => {
-    navigation.navigate('ManageExpense', { categoryId: id });
+    navigation.navigate('ManageExpense', { expenseId: id });
   };
   return (
     <Pressable style={({ pressed }) => pressed && styles.pressed} onPress={expenseItemPressHandler}>

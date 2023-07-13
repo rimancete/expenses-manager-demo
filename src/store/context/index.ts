@@ -1,1 +1,1 @@
-export { StateProvider, useGlobalState, useDispatch } from './context';
+export { GlobalStateProvider, useGlobalState, useDispatch } from './context';

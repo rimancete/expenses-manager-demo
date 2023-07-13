@@ -19,10 +19,10 @@ function useReducer({ initialValues }: ReducerProps) {
   return { state, dispatch };
 }
 
-const [StateProvider, useGlobalState, useDispatch] = constate(
+const [GlobalStateProvider, useGlobalState, useDispatch] = constate(
   useReducer,
   (value) => value.state,
   (value) => value.dispatch,
 );
 
-export { StateProvider, useGlobalState, useDispatch };
+export { GlobalStateProvider, useGlobalState, useDispatch };
