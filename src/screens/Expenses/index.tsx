@@ -1,5 +1,5 @@
 import { ExpensesContainer } from 'components';
-import { useGlobalState } from 'store/context';
+import { useGlobalState } from 'hooks';
 
 function Expenses() {
   const { expenses } = useGlobalState();

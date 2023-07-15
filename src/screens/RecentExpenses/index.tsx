@@ -1,12 +1,11 @@
 import { ExpensesContainer } from 'components';
-import { ExpenseType } from 'models';
-import { useGlobalState } from 'store/context';
+import { useGlobalState } from 'hooks';
 import formatDate from 'utils/formatDate';
 
 function RecentExpenses() {
   const { expenses } = useGlobalState();
 
-  const recentExpenses = expenses.filter((expense: ExpenseType) => {
+  const recentExpenses = expenses.filter((expense) => {
     const today = new Date();
     const date7DaysAgo = formatDate.getDateMinusDays(today, 7);
 

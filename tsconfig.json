@@ -12,6 +12,7 @@
       "styles/*": ["styles/*"],
       "store/*": ["store/*"],
       "assets/*": ["assets/*"],
+      "hooks/*": ["hooks/*"],
     }
   }
 }

@@ -1,6 +1,6 @@
 interface ExpenseType {
   amount: number;
-  id: string;
+  id?: string;
   description: string;
   date: Date;
 }
