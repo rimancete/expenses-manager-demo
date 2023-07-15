@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { useGlobalState } from 'hooks';
 import { ManageExpenseNavigationProps } from 'types';
-import { IconButton, Button } from 'components';
+import { IconButton, Button, ExpenseForm } from 'components';
 import theme from 'styles/theme';
 
 export interface ManageExpenseParams {
@@ -55,6 +55,7 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttonContainer}>
         <Button style={styles.button} onPress={confirmHandler}>
           {isEdting ? 'Confirm' : 'Add'}

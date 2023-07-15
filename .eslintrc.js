@@ -40,5 +40,6 @@ module.exports = {
         functions: 'defaultArguments',
       },
     ],
+    'react/jsx-props-no-spreading': 'off',
   },
 };

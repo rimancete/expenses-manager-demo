@@ -1,7 +1,8 @@
 
 # Expenses Manager Demo App
 
-Este é um app demonstração para gerenciador de despesas, para estudo / prática de conceitos relacionados a gerenciamento de estados globais, hooks, navegação (com React Navigation), incluindo menus aninhados, questões avançadas de layout (tema, grids, orientação), utilizando React Native.
+Este é um app demonstração para *gerenciar de despesas*, para estudo / prática de conceitos relacionados a gerenciamento de estados globais, hooks, navegação (com React Navigation), incluindo menus aninhados, questões avançadas de layout (tema, grids, orientação), utilizando React Native.
+O projeto está estruturado em `/src` com prettier e eslint, baseado em um boilerplate que criei.
 
 <!-- ### Mobile Perspectiva:
 ![nav](./docs/app.gif) -->
