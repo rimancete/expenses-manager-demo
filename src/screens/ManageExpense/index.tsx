@@ -3,8 +3,9 @@ import { StyleSheet, View } from 'react-native';
 
 import { useGlobalState } from 'hooks';
 import { ManageExpenseNavigationProps } from 'types';
-import { IconButton, Button, ExpenseForm } from 'components';
+import { IconButton, ExpenseForm } from 'components';
 import theme from 'styles/theme';
+import { ExpenseType } from 'models';
 
 export interface ManageExpenseParams {
   expenseId?: string;
@@ -15,56 +16,44 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
 
   const { expenseId } = route.params || {};
 
-  const isEdting = !!expenseId;
+  const isEditing = !!expenseId;
 
   const closeModal = () => {
     navigation.goBack();
-  };
-
-  const deleteExpenseHandler = () => {
-    deleteExpense(expenseId as string);
-    closeModal();
   };
 
   const cancelHandler = () => {
     closeModal();
   };
 
-  const confirmHandler = () => {
-    if (!isEdting) {
-      const dummyNewExpense = {
-        description: 'Test New Expense',
-        amount: 29.99,
-        date: new Date('2023-07-13'),
-      };
+  const deleteExpenseHandler = () => {
+    deleteExpense(expenseId as string);
+    navigation.goBack();
+  };
 
-      createExpense(dummyNewExpense);
+  const submit = (expenseData: ExpenseType) => {
+    if (!isEditing) {
+      createExpense(expenseData);
     } else {
-      const dummyEditExpense = { description: 'Test', amount: 19.99, date: new Date('2023-07-12') };
-
-      updateExpense(dummyEditExpense, expenseId);
+      updateExpense(expenseData, expenseId);
     }
-    closeModal();
+    navigation.goBack();
   };
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: `${isEdting ? 'Edit' : 'Add'} Expense`,
+      title: `${isEditing ? 'Edit' : 'Add'} Expense`,
     });
-  }, [isEdting, navigation]);
+  }, [isEditing, navigation]);
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-      <View style={styles.buttonContainer}>
-        <Button style={styles.button} onPress={confirmHandler}>
-          {isEdting ? 'Confirm' : 'Add'}
-        </Button>
-        <Button style={styles.button} flat onPress={cancelHandler}>
-          Cancel
-        </Button>
-      </View>
-      {isEdting && (
+      <ExpenseForm
+        onSubmit={submit}
+        onCancel={cancelHandler}
+        submitButtonLabel={isEditing ? 'Save' : 'Add'}
+      />
+      {isEditing && (
         <View style={styles.deleteContainers}>
           <IconButton
             icon="delete"
@@ -85,15 +74,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: theme().colors.primary800,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-  },
-  button: {
-    width: '45%',
   },
   deleteContainers: {
     marginTop: 16,

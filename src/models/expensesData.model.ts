@@ -2,7 +2,7 @@ interface ExpenseType {
   amount: number;
   id?: string;
   description: string;
-  date: Date;
+  date: Date | string;
 }
 type ExpensesDataType = {
   periodName: string;

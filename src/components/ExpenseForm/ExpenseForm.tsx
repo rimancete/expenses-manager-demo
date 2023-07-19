@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { ButtonProps, StyleSheet, Text, View } from 'react-native';
 
 import { useGlobalDimensions } from 'hooks';
+import { ExpenseType } from 'models/expensesData.model';
 import theme from 'styles/theme';
 
-import { useState } from 'react';
 import Input from './Input';
+import { Button } from '..';
 
 const initialValues = {
   amount: '',
@@ -13,15 +14,31 @@ const initialValues = {
   description: '',
 };
 
-function ExpenseForm() {
+interface ExpenseFormProps {
+  onSubmit: (expenseData: ExpenseType) => void;
+  onCancel: ButtonProps['onPress'];
+  submitButtonLabel: string;
+}
+
+function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }: ExpenseFormProps) {
   const { isLandscape } = useGlobalDimensions();
-  const [inpuValues, setInputValues] = useState(initialValues);
+  const [inputValues, setInputValues] = useState(initialValues);
 
   const inputChangeHandler = (value: string, inputName: keyof typeof initialValues) => {
     setInputValues((prevState) => {
       return { ...prevState, [inputName]: value };
     });
   };
+
+  const submitHandler = () => {
+    const expenseData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
+    onSubmit(expenseData);
+  };
+
   return (
     <View style={[styles.form, isLandscape && { marginTop: 0, flex: 1 }]}>
       <Text style={[styles.titleForm, isLandscape && { marginVertical: 0 }]}>Your Expense</Text>
@@ -30,7 +47,7 @@ function ExpenseForm() {
           label="Amount"
           keyboardType="decimal-pad"
           onChangeText={(value) => inputChangeHandler(value, 'amount')}
-          value={inpuValues.amount}
+          value={inputValues.amount}
           viewStyle={styles.rowInput}
         />
         <Input
@@ -38,7 +55,7 @@ function ExpenseForm() {
           placeholder="YYYY-MM-DD"
           maxLength={10}
           onChangeText={(value) => inputChangeHandler(value, 'date')}
-          value={inpuValues.date}
+          value={inputValues.date}
           viewStyle={styles.rowInput}
         />
       </View>
@@ -48,8 +65,17 @@ function ExpenseForm() {
         // autoCorrect={false}
         // autoCapitalize='none'
         onChangeText={(value) => inputChangeHandler(value, 'description')}
-        value={inpuValues.description}
+        value={inputValues.description}
       />
+
+      <View style={styles.buttonContainer}>
+        <Button style={styles.button} onPress={submitHandler}>
+          {submitButtonLabel}
+        </Button>
+        <Button style={styles.button} flat onPress={onCancel}>
+          Cancel
+        </Button>
+      </View>
     </View>
   );
 }
@@ -72,5 +98,14 @@ const styles = StyleSheet.create({
   },
   rowInput: {
     flex: 1,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  button: {
+    width: '45%',
   },
 });
