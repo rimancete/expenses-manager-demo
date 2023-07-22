@@ -4,15 +4,8 @@
     "baseUrl": "./src/",
     "strict": true,
     "paths": {
-      "data/*": ["data/*"],
-      "models/*": ["models/*"],
       "components/*": ["components/*"],
-      "screens/*": ["screens/*"],
       "utils/*": ["utils/*"],
-      "styles/*": ["styles/*"],
-      "store/*": ["store/*"],
-      "assets/*": ["assets/*"],
-      "hooks/*": ["hooks/*"],
     }
   }
 }

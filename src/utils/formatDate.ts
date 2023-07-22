@@ -1,6 +1,6 @@
 const formatDate = {
-  expenseItem: (date: Date) => {
-    return `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`;
+  get: (date: Date) => {
+    return date.toISOString().slice(0, 10);
   },
   getDateMinusDays: (date: Date, days: number) => {
     return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - days);

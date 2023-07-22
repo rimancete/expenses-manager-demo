@@ -23,7 +23,7 @@ function ExpenseItem({ expense }: ExpenseItemProps) {
       <View style={styles.itemContainer}>
         <View>
           <Text style={[styles.textBase, styles.descriptionText]}>{description}</Text>
-          <Text style={styles.textBase}>{formatDate.expenseItem(date as Date)}</Text>
+          <Text style={styles.textBase}>{formatDate.get(date as Date)}</Text>
         </View>
         <View style={styles.amountContainer}>
           <Text style={[styles.textBase, styles.amountText]}>{amount.toFixed(2)}</Text>

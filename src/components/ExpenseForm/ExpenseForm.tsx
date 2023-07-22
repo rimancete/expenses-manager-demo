@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { ButtonProps, StyleSheet, Text, View } from 'react-native';
+import { Alert, ButtonProps, StyleSheet, Text, View } from 'react-native';
 
 import { useGlobalDimensions } from 'hooks';
-import { ExpenseType } from 'models/expensesData.model';
+import formatDate from 'utils/formatDate';
+import { ExpenseType } from 'models';
 import theme from 'styles/theme';
+import Button from '../Button';
 
 import Input from './Input';
-import { Button } from '..';
 
 const initialValues = {
   amount: '',
@@ -18,11 +19,24 @@ interface ExpenseFormProps {
   onSubmit: (expenseData: ExpenseType) => void;
   onCancel: ButtonProps['onPress'];
   submitButtonLabel: string;
+  defaultValues?: ExpenseType;
 }
 
-function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }: ExpenseFormProps) {
+function ExpenseForm({
+  onCancel,
+  onSubmit,
+  submitButtonLabel,
+  defaultValues = undefined,
+}: ExpenseFormProps) {
   const { isLandscape } = useGlobalDimensions();
-  const [inputValues, setInputValues] = useState(initialValues);
+  const [inputValues, setInputValues] = useState({
+    ...initialValues,
+    ...(defaultValues && {
+      amount: defaultValues.amount.toString(),
+      date: defaultValues.date instanceof Date ? formatDate.get(defaultValues.date) : '',
+      description: defaultValues.description,
+    }),
+  });
 
   const inputChangeHandler = (value: string, inputName: keyof typeof initialValues) => {
     setInputValues((prevState) => {
@@ -36,6 +50,14 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }: ExpenseFormProps
       date: new Date(inputValues.date),
       description: inputValues.description,
     };
+    const amaountIsValid = !Number.isNaN(expenseData.amount) && expenseData.amount > 0;
+    const dateIsValid = expenseData.date.toString() !== 'Invalid Date';
+    const descriptionIsValid = expenseData.description.trim().length > 0;
+
+    if (!amaountIsValid || !dateIsValid || !descriptionIsValid) {
+      Alert.alert('Invalid input', 'Please check your input values');
+      return;
+    }
     onSubmit(expenseData);
   };
 
@@ -47,7 +69,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }: ExpenseFormProps
           label="Amount"
           keyboardType="decimal-pad"
           onChangeText={(value) => inputChangeHandler(value, 'amount')}
-          value={inputValues.amount}
+          value={String(inputValues.amount)}
           viewStyle={styles.rowInput}
         />
         <Input

@@ -1,22 +1,24 @@
 import { useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { useGlobalState } from 'hooks';
 import { ManageExpenseNavigationProps } from 'types';
 import { IconButton, ExpenseForm } from 'components';
 import theme from 'styles/theme';
 import { ExpenseType } from 'models';
+import { useGlobalState } from 'hooks';
 
 export interface ManageExpenseParams {
   expenseId?: string;
 }
 
 function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
-  const { createExpense, updateExpense, deleteExpense } = useGlobalState();
+  const { createExpense, updateExpense, deleteExpense, expenses } = useGlobalState();
 
   const { expenseId } = route.params || {};
 
   const isEditing = !!expenseId;
+
+  const selectedExpense = expenses.find((expense) => expense.id === expenseId);
 
   const closeModal = () => {
     navigation.goBack();
@@ -52,6 +54,7 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
         onSubmit={submit}
         onCancel={cancelHandler}
         submitButtonLabel={isEditing ? 'Save' : 'Add'}
+        defaultValues={selectedExpense}
       />
       {isEditing && (
         <View style={styles.deleteContainers}>
