@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -17,6 +19,7 @@ module.exports = function (api) {
             store: './src/store',
             assets: './src/assets',
             hooks: './src/hooks',
+            '@env': './src/env.js',
           },
         },
       ],
