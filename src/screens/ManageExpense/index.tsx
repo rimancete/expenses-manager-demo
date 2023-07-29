@@ -6,7 +6,7 @@ import { IconButton, ExpenseForm } from 'components';
 import theme from 'styles/theme';
 import { ExpenseType } from 'models';
 import { useGlobalState } from 'hooks';
-import { Env } from '@env';
+import { request } from 'hooks/utils';
 
 export interface ManageExpenseParams {
   expenseId?: string;
@@ -33,9 +33,9 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
     deleteExpense(expenseId as string);
     navigation.goBack();
   };
-  console.log(Env.API_URL);
-  const submit = (expenseData: ExpenseType) => {
+  const submit = async (expenseData: ExpenseType) => {
     if (!isEditing) {
+      await request({ body: expenseData });
       createExpense(expenseData);
     } else {
       updateExpense(expenseData, expenseId);

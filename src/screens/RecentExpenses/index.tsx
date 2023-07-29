@@ -1,9 +1,21 @@
+import { useCallback, useEffect } from 'react';
+
 import { ExpensesContainer } from 'components';
 import { useGlobalState } from 'hooks';
+import { request } from 'hooks/utils';
 import formatDate from 'utils/formatDate';
 
 function RecentExpenses() {
-  const { expenses } = useGlobalState();
+  const { expenses, setExpenses } = useGlobalState();
+
+  const getData = useCallback(async () => {
+    const expensesFetched = await request({ method: 'get' });
+    if (Array.isArray(expensesFetched)) setExpenses(expensesFetched);
+  }, [setExpenses]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const recentExpenses = expenses.filter((expense) => {
     const today = new Date();

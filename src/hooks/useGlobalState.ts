@@ -27,10 +27,15 @@ export default function useGlobalState() {
     dispatch({ expenses: filteredExpenses });
   };
 
+  const setExpenses = (newExpenses: ExpenseType[]) => {
+    dispatch({ expenses: newExpenses });
+  };
+
   return {
     expenses,
     createExpense,
     updateExpense,
     deleteExpense,
+    setExpenses,
   };
 }

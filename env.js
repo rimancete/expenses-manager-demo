@@ -43,6 +43,7 @@ const _env = {
 const parsed = client.safeParse(_env);
 
 if (parsed.success === false) {
+  // eslint-disable-next-line no-console
   console.error(
     '❌ Invalid environment variables:',
     parsed.error.flatten().fieldErrors,
