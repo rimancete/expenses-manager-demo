@@ -7,9 +7,7 @@ export default function useGlobalState() {
   const dispatch = useDispatch();
 
   const createExpense = (newExpense: ExpenseType) => {
-    const id = new Date().toString() + Math.random().toString();
-
-    dispatch({ expenses: [{ ...newExpense, id }, ...expenses] });
+    dispatch({ expenses: [newExpense, ...expenses] });
   };
 
   const updateExpense = (editableExpense: ExpenseType, expenseId: string) => {
@@ -28,7 +26,8 @@ export default function useGlobalState() {
   };
 
   const setExpenses = (newExpenses: ExpenseType[]) => {
-    dispatch({ expenses: newExpenses });
+    const orderedExpenses = newExpenses.reverse();
+    dispatch({ expenses: orderedExpenses });
   };
 
   return {

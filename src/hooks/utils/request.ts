@@ -39,7 +39,9 @@ export default async function request({ method = 'post', body }: ResquestProps) 
         }
         // eslint-disable-next-line no-console
         if (APP_ENV === 'development') console.log(method, url, response.status);
-        return response;
+
+        return data.name;
+        // return response;
       })
       // eslint-disable-next-line no-console
       .catch((err) => console.log(err))

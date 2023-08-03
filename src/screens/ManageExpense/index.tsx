@@ -35,8 +35,9 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
   };
   const submit = async (expenseData: ExpenseType) => {
     if (!isEditing) {
-      await request({ body: expenseData });
-      createExpense(expenseData);
+      const id = await request({ body: expenseData });
+
+      createExpense({ ...expenseData, id });
     } else {
       updateExpense(expenseData, expenseId);
     }
