@@ -1,4 +1,4 @@
-import { ExpenseType } from 'models';
+import { RequestBodyType } from 'models';
 import { GlobalStateType } from 'models/globalState.model';
 import { useGlobalState as getGlobalState, useDispatch } from 'store/context';
 
@@ -6,11 +6,11 @@ export default function useGlobalState() {
   const { expenses } = getGlobalState() as GlobalStateType;
   const dispatch = useDispatch();
 
-  const createExpense = (newExpense: ExpenseType) => {
+  const createExpense = (newExpense: RequestBodyType) => {
     dispatch({ expenses: [newExpense, ...expenses] });
   };
 
-  const updateExpense = (editableExpense: ExpenseType, expenseId: string) => {
+  const updateExpense = (editableExpense: RequestBodyType, expenseId: string) => {
     const updatableExpenseIndex = expenses.findIndex((expense) => expense.id === expenseId);
     const updatableExpense = expenses[updatableExpenseIndex];
     const updatedItem = { ...updatableExpense, ...editableExpense };
@@ -21,11 +21,13 @@ export default function useGlobalState() {
   };
 
   const deleteExpense = (expenseId: string) => {
-    const filteredExpenses = expenses.filter((expense: ExpenseType) => expense.id !== expenseId);
+    const filteredExpenses = expenses.filter(
+      (expense: RequestBodyType) => expense.id !== expenseId,
+    );
     dispatch({ expenses: filteredExpenses });
   };
 
-  const setExpenses = (newExpenses: ExpenseType[]) => {
+  const setExpenses = (newExpenses: RequestBodyType[]) => {
     const orderedExpenses = newExpenses.reverse();
     dispatch({ expenses: orderedExpenses });
   };

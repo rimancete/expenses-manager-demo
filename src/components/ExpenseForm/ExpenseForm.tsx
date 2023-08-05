@@ -3,7 +3,7 @@ import { ButtonProps, StyleSheet, Text, View } from 'react-native';
 
 import { useGlobalDimensions } from 'hooks';
 import formatDate from 'utils/formatDate';
-import { ExpenseType } from 'models';
+import { ExpenseType, RequestBodyType } from 'models';
 import theme from 'styles/theme';
 import Button from '../Button';
 
@@ -16,7 +16,7 @@ const initialValues = {
 };
 
 interface ExpenseFormProps {
-  onSubmit: (expenseData: ExpenseType) => void;
+  onSubmit: (expenseData: RequestBodyType) => void;
   onCancel: ButtonProps['onPress'];
   submitButtonLabel: string;
   defaultValues?: ExpenseType;

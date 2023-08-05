@@ -1,10 +1,10 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ManageExpenseNavigationProps } from 'types';
-import { IconButton, ExpenseForm } from 'components';
+import { IconButton, ExpenseForm, LoadingOverlay, ErrorOverlay } from 'components';
 import theme from 'styles/theme';
-import { ExpenseType } from 'models';
+import { RequestBodyType } from 'models';
 import { useGlobalState } from 'hooks';
 import { request } from 'hooks/utils';
 
@@ -13,6 +13,9 @@ export interface ManageExpenseParams {
 }
 
 function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
+  const [isFetching, setIsFetching] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const { createExpense, updateExpense, deleteExpense, expenses } = useGlobalState();
 
   const { expenseId } = route.params || {};
@@ -29,19 +32,38 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
     closeModal();
   };
 
-  const deleteExpenseHandler = () => {
-    deleteExpense(expenseId as string);
-    navigation.goBack();
+  const deleteExpenseHandler = async () => {
+    setIsFetching(true);
+    const response = await request({ method: 'delete', body: { id: expenseId } });
+    if (response?.errorMessage) {
+      setIsFetching(false);
+      setErrorMessage(response.errorMessage);
+    } else {
+      deleteExpense(expenseId as string);
+      navigation.goBack();
+    }
   };
-  const submit = async (expenseData: ExpenseType) => {
+
+  const submit = async (expenseData: RequestBodyType) => {
+    setIsFetching(true);
     if (!isEditing) {
       const id = await request({ body: expenseData });
-
-      createExpense({ ...expenseData, id });
+      if (id?.errorMessage) {
+        setIsFetching(false);
+        setErrorMessage(id.errorMessage);
+      } else {
+        createExpense({ ...expenseData, id });
+        navigation.goBack();
+      }
     } else {
       updateExpense(expenseData, expenseId);
+      const body = { ...expenseData, id: expenseId };
+      const response = await request({ method: 'put', body });
+      if (response?.errorMessage) {
+        setIsFetching(false);
+        setErrorMessage(response.errorMessage);
+      } else navigation.goBack();
     }
-    navigation.goBack();
   };
 
   useLayoutEffect(() => {
@@ -50,7 +72,11 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
     });
   }, [isEditing, navigation]);
 
-  return (
+  if (errorMessage && !isFetching) return <ErrorOverlay errorMessage={errorMessage} />;
+
+  return isFetching ? (
+    <LoadingOverlay />
+  ) : (
     <View style={styles.container}>
       <ExpenseForm
         onSubmit={submit}

@@ -1,56 +1,45 @@
-/* eslint-disable no-restricted-syntax */
 import axios from 'axios';
 
 import { Env } from '@env';
+import { RequestBodyType } from 'models';
 
 interface ResquestProps {
-  // endpoint: string;
   method?: 'get' | 'post' | 'put' | 'patch' | 'delete';
-  body?: unknown;
-  // contentType?: string;
-  // accept?: string | undefined;
-  // headers?: HeadersInit | null;
+  body?: RequestBodyType;
 }
 export default async function request({ method = 'post', body }: ResquestProps) {
-  // const isFormData = body instanceof FormData;
-
   const { API_URL, APP_ENV } = Env;
-  const url = `${API_URL}/expenses.json`;
 
-  return (
-    axios[method](url, body ? { ...body } : undefined)
-      .then((response) => {
-        const { data } = response;
-        if (method === 'get') {
-          const expenses = [];
+  const { id, ...restBody } = body || {};
+  const payload = restBody;
+  const url = `${API_URL}${id ? `/expenses/${id}` : '/expenses'}.json`;
 
-          for (const key in data) {
-            if (Object.hasOwn(data, key)) {
-              const expenseFormatted = {
-                id: key,
-                amount: data[key].amount,
-                date: new Date(data[key].date),
-                description: data[key].description,
-              };
-              expenses.push(expenseFormatted);
-            }
-          }
-          return expenses;
-        }
-        // eslint-disable-next-line no-console
-        if (APP_ENV === 'development') console.log(method, url, response.status);
+  return axios[method](url, Object.keys(payload).length ? { ...payload } : undefined)
+    .then((response) => {
+      const { data } = response;
+      if (method === 'get') {
+        const expenses: RequestBodyType[] = [];
 
-        return data.name;
-        // return response;
-      })
+        Object.keys(data).forEach((key) => {
+          const expenseFormatted = {
+            id: key,
+            amount: data[key].amount,
+            date: new Date(data[key].date),
+            description: data[key].description,
+          };
+          expenses.push(expenseFormatted);
+        });
+        return expenses;
+      }
       // eslint-disable-next-line no-console
-      .catch((err) => console.log(err))
-  );
-  // return axios[method](url, {
-  //   body: body ? (isFormData ? { ...body } : JSON.stringify({ ...body })) : null,
-  // }).then((response) => {
-  //   // eslint-disable-next-line no-console
-  //   if (NODE_ENV === 'development') console.log(method, url, response.status);
-  //   return response;
-  // });
+      if (APP_ENV === 'development') console.log(method, url, response.status);
+
+      if (method === 'put' || method === 'delete') return response;
+      return data.name;
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log(err);
+      return { errorMessage: err.message, errors: err };
+    });
 }
