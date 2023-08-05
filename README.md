@@ -1,17 +1,19 @@
 
 # Expenses Manager Demo App
 
-Este é um app demonstração para *gerenciar de despesas*, para estudo / prática de conceitos relacionados a gerenciamento de estados globais, hooks, entrada de dados, navegação (com React Navigation), incluindo menus aninhados, questões avançadas de layout (tema, grids, orientação), utilizando React Native.
+Este é um app demonstração para *gerenciar de despesas*, em React Native, para estudo / prática de conceitos relacionados a comunicação com BE e seus tratamentos, contexto, hooks, navegação (com React Navigation), incluindo menus aninhados, e questões avançadas de layout (tema, grids, orientação).
 O projeto está estruturado em `/src` com prettier e eslint, baseado em um boilerplate que criei.
 
-<!-- ### Mobile Perspectiva:
-![nav](./docs/app.gif) -->
+### Mobile Perspectiva:
+![nav](./docs/app.gif)
 
 ## Bibliotecas utilizadas
 
 - expo - Framework React Native
 - React Navigator - Navegação / Menus
 - Constate - Gerenciador de contexto React
+- Zod / dotenv - Tipagens de variávies de ambiente
+- axios - Requisições
 
 # Instalando e rodando o projeto
 Antes de instalar/rodar o projeto, você precisa dos seguintes itens:
@@ -42,9 +44,8 @@ Antes de instalar/rodar o projeto, você precisa dos seguintes itens:
 
 Como o projeto é acadêmico, o foco realmente foi esse. Tendo isso em mente, seguem sugestões:
 
-- Técnica
-  - Melhorar importações
+- Bugs
+  - Corrigir falha no onclick de botões em modo paisagem
 
 - Layout
   - Implementação de fonte personalizada
-  - Ajustes finos em orientação paisagem

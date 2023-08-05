@@ -5,7 +5,7 @@ import { ManageExpenseNavigationProps } from 'types';
 import { IconButton, ExpenseForm, LoadingOverlay, ErrorOverlay } from 'components';
 import theme from 'styles/theme';
 import { RequestBodyType } from 'models';
-import { useGlobalState } from 'hooks';
+import { useGlobalDimensions, useGlobalState } from 'hooks';
 import { request } from 'hooks/utils';
 
 export interface ManageExpenseParams {
@@ -13,6 +13,8 @@ export interface ManageExpenseParams {
 }
 
 function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
+  const { isLandscape } = useGlobalDimensions();
+
   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -85,7 +87,7 @@ function ManageExpense({ navigation, route }: ManageExpenseNavigationProps) {
         defaultValues={selectedExpense}
       />
       {isEditing && (
-        <View style={styles.deleteContainers}>
+        <View style={[styles.deleteContainers, isLandscape && { borderTopWidth: 0 }]}>
           <IconButton
             icon="delete"
             color={theme().colors.erro500}
