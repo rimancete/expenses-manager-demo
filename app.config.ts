@@ -19,10 +19,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
+    bundleIdentifier: 'com.rimancete.expensesmanagerdemo',
     supportsTablet: true,
     // bundleIdentifier: Env.BUNDLE_ID,
   },
   android: {
+    package: 'com.rimancete.expensesmanagerdemo',
     adaptiveIcon: {
       foregroundImage: './src/assets/adaptive-icon.png',
       backgroundColor: '#fff',
